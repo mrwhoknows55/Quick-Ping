@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     void setOutput(){
 
-        finalNumber = countryCode.substring(0, 0) + countryCode.substring(1) + mobNumber;
+//        finalNumber = countryCode.substring(0, 0) + countryCode.substring(1) + mobNumber;
+
+        finalNumber = countryCode.substring(countryCode.lastIndexOf("+") +1) + mobNumber;
 
         if(message.isEmpty()){
             apiLink = "https://api.whatsapp.com/send?phone=" + finalNumber;
