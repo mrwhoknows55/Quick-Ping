@@ -10,29 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dialCodeWrapper"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/dial_code"
-            app:endIconMode="clear_text"
             app:errorEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/country_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/dialCodeWrapper"
-                android:layout_alignStart="@+id/dialCodeWrapper"
-                android:inputType="phone"
-                android:text="+91" />
+                android:labelFor="@id/country_dropdown" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,9 +47,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                app:counterMaxLength="12"
                 android:layout_height="match_parent"
-                android:inputType="phone" />
+                android:inputType="phone"
+                app:counterMaxLength="12" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,10 +76,10 @@
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondaryColor"
             android:layout_below="@+id/messageWrapper"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
+            android:backgroundTint="@color/secondaryColor"
             android:onClick="clicked"
             android:text="@string/message" />
 
