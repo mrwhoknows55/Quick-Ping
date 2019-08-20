@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     //    Variable Declarations
-    private AdView mAdView;
+    AdView mAdView;
     Button messageBtn;
     ArrayList<CountryItem> countryCodesList;
     AutoCompleteTextView countryCodeDropdown;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         countryCodeDropdown.setDropDownVerticalOffset(24);
     }
 
-    void adRequest(){
+    void adRequest() {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
