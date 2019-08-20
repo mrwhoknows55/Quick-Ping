@@ -12,6 +12,11 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +27,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     //    Variable Declarations
+    private AdView mAdView;
     Button messageBtn;
     ArrayList<CountryItem> countryCodesList;
     AutoCompleteTextView countryCodeDropdown;
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         foundByID();
         initList();
+        adRequest();
     }
 
     //    Finding components with their ids
@@ -103,7 +110,18 @@ public class MainActivity extends AppCompatActivity {
         CountryAdapter mAdapter = new CountryAdapter(this, countryCodesList);
         countryCodeDropdown.setAdapter(mAdapter);
         countryCodeDropdown.setDropDownVerticalOffset(24);
+    }
 
+    void adRequest(){
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
 }
