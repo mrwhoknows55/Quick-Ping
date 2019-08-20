@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         foundByID();
         initList();
-
-
-        CountryAdapter mAdapter = new CountryAdapter(this, countryCodesList);
-        countryCodeDropdown.setAdapter(mAdapter);
-
     }
 
     //    Finding components with their ids
@@ -104,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
         Type countryType = new TypeToken<ArrayList<CountryItem>>() {
         }.getType();
         countryCodesList = gson.fromJson(mainListJSON, countryType);
+
+        CountryAdapter mAdapter = new CountryAdapter(this, countryCodesList);
+        countryCodeDropdown.setAdapter(mAdapter);
+        countryCodeDropdown.setDropDownVerticalOffset(24);
 
     }
 
