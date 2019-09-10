@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -80,15 +83,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(apiLink)));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        foundByID();
-        initList();
-        adRequest();
-    }
-
     //    Finding components with their ids
     void foundByID() {
         countryCodeDropdown = findViewById(R.id.country_dropdown);
@@ -124,4 +118,42 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        foundByID();
+        initList();
+        adRequest();
+    }
+    // For Menu Items
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(this, "You Selected: "+ item.getTitle(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case R.id.history:
+                Log.i("INFO: ","history");
+                return true;
+            case R.id.share:
+                Log.i("INFO: ","share");
+                return true;
+            case R.id.rate:
+                Log.i("INFO: ","rate-us");
+                return true;
+            case R.id.about:
+                Log.i("INFO: ","about");
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

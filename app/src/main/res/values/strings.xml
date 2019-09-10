@@ -5,4 +5,8 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="message">Message</string>
     <string name="enter_message">Enter Message</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share">Share</string>
+    <string name="history">History</string>
+    <string name="about">About</string>
 </resources>
