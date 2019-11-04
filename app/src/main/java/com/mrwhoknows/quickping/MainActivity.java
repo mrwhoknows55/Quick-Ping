@@ -23,6 +23,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -127,8 +128,6 @@ public class MainActivity extends AppCompatActivity {
         adRequest();
     }
     // For Menu Items
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -137,23 +136,43 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "App By Mr_WhoKnows: "+ item.getTitle(), Toast.LENGTH_SHORT).show();
 
         switch (item.getItemId()){
+            case R.id.qrcode:
+                Log.i("INFO: ","history");
+                IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                intentIntegrator.setCameraId(0);
+                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.setPrompt("Scanning QR Code");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setBarcodeImageEnabled(true);
+                intentIntegrator.initiateScan();
+                return true;
             case R.id.history:
                 Log.i("INFO: ","history");
+                Toast.makeText(this, "Feature Coming Soon", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share:
                 Log.i("INFO: ","share");
+                Toast.makeText(this,"App By Mr_WhoKnows", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.rate:
                 Log.i("INFO: ","rate-us");
+                Toast.makeText(this,"App By Mr_WhoKnows: ", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.about:
                 Log.i("INFO: ","about");
+                Toast.makeText(this,"App By Mr_WhoKnows: ", Toast.LENGTH_SHORT).show();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void openQrCodeActivity(View view){
+        Intent intent = new Intent(this, QRCodeActivity.class);
+        startActivity(intent);
+    }
+
 }

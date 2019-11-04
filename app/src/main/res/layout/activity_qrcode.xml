@@ -17,7 +17,7 @@
         app:srcCompat="@color/design_default_color_on_primary" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mobNumberWrapper"
+        android:id="@+id/ownMobNumberWrapper"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,26 +41,26 @@
 
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/popUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Number"
-        android:id="@+id/popUpBtn"
         android:layout_marginTop="16dp"
+        android:text="Your Number"
+        android:onClick="genrateQRCode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobNumberWrapper">
-    </com.google.android.material.button.MaterialButton>
+        app:layout_constraintTop_toBottomOf="@+id/ownMobNumberWrapper" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/scanBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan QR Code"
-        android:id="@+id/scanBtn"
         android:layout_marginTop="16dp"
+        android:text="Scan QR Code"
+        android:onClick="scanQRBtnClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popUpBtn">
-    </com.google.android.material.button.MaterialButton>
+        app:layout_constraintTop_toBottomOf="@+id/popUpBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
