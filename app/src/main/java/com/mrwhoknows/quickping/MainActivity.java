@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "You Selected: "+ item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "App By Mr_WhoKnows: "+ item.getTitle(), Toast.LENGTH_SHORT).show();
 
         switch (item.getItemId()){
             case R.id.history:
