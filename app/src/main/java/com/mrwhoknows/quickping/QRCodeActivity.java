@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +25,9 @@ public class QRCodeActivity extends AppCompatActivity {
     MaterialButton scanBtn, genBtn;
     TextInputLayout ownNumberWrapper;
     ImageView qrcodeImage;
-    String lastApi;
+    String lastApi, ownPhoneNo;
+    public static final String SHARED_PREF = "Shared Prefs";
+    public static final String OWN_PH = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,22 @@ public class QRCodeActivity extends AppCompatActivity {
         genBtn = findViewById(R.id.popUpBtn);
         ownNumberWrapper = findViewById(R.id.ownMobNumberWrapper);
         qrcodeImage = findViewById(R.id.qrCodeImg);
+
+        genBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                genrateQRCode();
+            }
+        });
+
+//        Done Add persistent mob number and qr code (load and update)
+        loadNumber();
+        updateNumber();
+
     }
 
-    public void genrateQRCode(View view){
+    public void genrateQRCode(){
         getInput();
-
         try {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 BitMatrix bitMatrix = multiFormatWriter.encode(lastApi, BarcodeFormat.QR_CODE, 500, 500);
@@ -50,7 +64,8 @@ public class QRCodeActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+//               done Add persistent mob number and qr code (save)
+            saveNumber();
     }
 
     public void scanQRBtnClicked(View view){
@@ -67,6 +82,7 @@ public class QRCodeActivity extends AppCompatActivity {
         intentIntegrator.setBarcodeImageEnabled(true);
         intentIntegrator.initiateScan();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -78,7 +94,7 @@ public class QRCodeActivity extends AppCompatActivity {
     }
 
     public void getInput(){
-        String ownPhoneNo = ownNumberWrapper.getEditText().getText().toString();
+        ownPhoneNo = ownNumberWrapper.getEditText().getText().toString();
 
         if(ownPhoneNo.isEmpty()){
             ownNumberWrapper.setError("Reqired!");
@@ -87,4 +103,24 @@ public class QRCodeActivity extends AppCompatActivity {
             lastApi = "https://api.whatsapp.com/send?phone=91" + ownPhoneNo;
         }
     }
+
+    public void saveNumber(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(OWN_PH, ownNumberWrapper.getEditText().getText().toString().trim());
+        editor.apply();
+    }
+
+    public void loadNumber(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+
+        ownPhoneNo = sharedPreferences.getString(OWN_PH,"");
+    }
+
+    public void updateNumber(){
+        ownNumberWrapper.getEditText().setText(ownPhoneNo);
+        genrateQRCode();
+    }
+
 }
