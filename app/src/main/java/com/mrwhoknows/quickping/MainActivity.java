@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,13 +36,28 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<CountryItem> countryCodesList;
     AutoCompleteTextView countryCodeDropdown;
     TextInputLayout countryCodeInput, mobNumberInput, messageInput;
-    String mobNumber, countryCode, message, finalNumber, apiLink;
+    String mobNumber, countryCode, message, finalNumber, apiLink, autoCountryCode;
     Gson gson;
+    public static String SHARED_PREF = "Shared Prefrences";
+    public static String COUNTRY_CODE = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        foundByID();
+        initList();
+        //      Added persistence dropdown country (load and update)
+        loadCountryCode();
+        updateCountryCode();
+        adRequest();
+    }
 
     //    Method Will Called When Message Button is clicked
     public void clicked(View view) {
         Log.i("BUTTON", "Message Button Clicked");
-
+//        Added persistence dropdown country (save)
+        saveCountryCode();
         getInput();
         checkError();
     }
@@ -118,17 +134,25 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        foundByID();
-        initList();
-        adRequest();
+    public void saveCountryCode(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(COUNTRY_CODE, countryCodeDropdown.getText().toString());
+        editor.apply();
     }
+
+    public void loadCountryCode(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        autoCountryCode = sharedPreferences.getString(COUNTRY_CODE, "");
+    }
+
+    public void updateCountryCode(){
+        countryCodeDropdown.setText(autoCountryCode);
+    }
+
+
     // For Menu Items
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
